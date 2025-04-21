@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { GamepadIcon, Github, Twitter, Linkedin } from "lucide-react";
+import { CodeIcon, GithubIcon, LinkedinIcon, InstagramIcon } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -9,64 +9,72 @@ const Footer = () => {
           <div className="mb-6 md:mb-0">
             <Link href="/">
               <a className="text-primary dark:text-indigo-400 text-xl font-bold flex items-center">
-                <GamepadIcon className="mr-2" />
-                <span className="font-['Poppins']">GameCraft</span>
+                <CodeIcon className="mr-2" />
+                <span className="font-['Poppins']">Muhammad Faisal</span>
               </a>
             </Link>
             <p className="text-gray-600 dark:text-gray-400 mt-2 text-sm">
-              Create and share game levels with coworkers
+              Mahasiswa Informatika & Web Developer
             </p>
           </div>
 
           <div className="flex space-x-4">
             <a
-              href="#"
+              href="https://github.com/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-indigo-400 transition-colors"
               aria-label="GitHub"
             >
-              <Github className="h-5 w-5" />
+              <GithubIcon className="h-5 w-5" />
             </a>
             <a
-              href="#"
-              className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-indigo-400 transition-colors"
-              aria-label="Twitter"
-            >
-              <Twitter className="h-5 w-5" />
-            </a>
-            <a
-              href="#"
+              href="https://linkedin.com/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-indigo-400 transition-colors"
               aria-label="LinkedIn"
             >
-              <Linkedin className="h-5 w-5" />
+              <LinkedinIcon className="h-5 w-5" />
+            </a>
+            <a
+              href="https://instagram.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-indigo-400 transition-colors"
+              aria-label="Instagram"
+            >
+              <InstagramIcon className="h-5 w-5" />
             </a>
           </div>
         </div>
 
         <div className="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} GameCraft. All rights reserved.
+            &copy; {new Date().getFullYear()} Muhammad Faisal Abdurrahman. UTS Pemrograman Web.
           </p>
 
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <a
-              href="#"
-              className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-indigo-400 text-sm transition-colors"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="#"
-              className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-indigo-400 text-sm transition-colors"
-            >
-              Terms of Service
-            </a>
-            <a
-              href="#"
-              className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-indigo-400 text-sm transition-colors"
-            >
-              Help
-            </a>
+            <Link href="/">
+              <a className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-indigo-400 text-sm transition-colors">
+                Home
+              </a>
+            </Link>
+            <Link href="/about">
+              <a className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-indigo-400 text-sm transition-colors">
+                About
+              </a>
+            </Link>
+            <Link href="/projects">
+              <a className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-indigo-400 text-sm transition-colors">
+                Projects
+              </a>
+            </Link>
+            <Link href="/contact">
+              <a className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-indigo-400 text-sm transition-colors">
+                Contact
+              </a>
+            </Link>
           </div>
         </div>
       </div>
