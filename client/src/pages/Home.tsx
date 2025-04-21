@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { motion, useMotionValue, useTransform, useScroll, AnimatePresence } from "framer-motion";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { 
   CodeIcon, 
   GithubIcon, 
@@ -10,8 +10,22 @@ import {
   BrainIcon, 
   GlobeIcon, 
   SmartphoneIcon,
-  ChevronDownIcon
+  ChevronDownIcon,
+  GamepadIcon
 } from "lucide-react";
+
+// Mini game particle type
+interface GameParticle {
+  id: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  color: string;
+  clicked: boolean;
+  points: number;
+}
 
 const Home = () => {
   const [typedText, setTypedText] = useState("");
@@ -19,7 +33,18 @@ const Home = () => {
   const toType = "Web Developer | UI Designer | Mobile Developer";
   const typingSpeed = 100; // ms per character
   const scrollRef = useRef(null);
-
+  
+  // Mini game states
+  const [showGameModal, setShowGameModal] = useState(false);
+  const [gameActive, setGameActive] = useState(false);
+  const [gameParticles, setGameParticles] = useState<GameParticle[]>([]);
+  const [gameScore, setGameScore] = useState(0);
+  const [gameTime, setGameTime] = useState(30);
+  const gameCanvasRef = useRef<HTMLDivElement | null>(null);
+  const gameTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const gameFrameRef = useRef<number | null>(null);
+  const [gameHighScore, setGameHighScore] = useState(0);
+  
   // Matrix-style background effect
   const DigitalRain = () => {
     return (
@@ -45,6 +70,154 @@ const Home = () => {
       </div>
     );
   };
+
+  // Mini game - initialize
+  const initializeGame = useCallback(() => {
+    setGameScore(0);
+    setGameTime(30);
+    setGameActive(true);
+    
+    // Generate initial particles
+    const newParticles: GameParticle[] = [];
+    for (let i = 0; i < 15; i++) {
+      const radius = Math.random() * 15 + 10;
+      newParticles.push({
+        id: i,
+        x: Math.random() * (window.innerWidth * 0.8 - radius * 2) + radius,
+        y: Math.random() * (window.innerHeight * 0.7 - radius * 2) + radius,
+        vx: (Math.random() - 0.5) * 4,
+        vy: (Math.random() - 0.5) * 4,
+        radius,
+        color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+        clicked: false,
+        points: Math.floor(30 / radius) + 1, // Smaller particles give more points
+      });
+    }
+    setGameParticles(newParticles);
+    
+    // Set timer
+    if (gameTimerRef.current) {
+      clearInterval(gameTimerRef.current);
+    }
+    
+    gameTimerRef.current = setInterval(() => {
+      setGameTime(prevTime => {
+        if (prevTime <= 1) {
+          endGame();
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+    
+    // Start animation frame
+    if (gameFrameRef.current) {
+      cancelAnimationFrame(gameFrameRef.current);
+    }
+    
+    const updateParticles = () => {
+      setGameParticles(prevParticles => {
+        return prevParticles.map(particle => {
+          // If already clicked, make it disappear
+          if (particle.clicked) {
+            return {
+              ...particle,
+              radius: particle.radius * 0.9, // Shrink
+              opacity: 0.7
+            };
+          }
+          
+          // Update position
+          let newX = particle.x + particle.vx;
+          let newY = particle.y + particle.vy;
+          
+          // Bounce off walls
+          if (newX < particle.radius || newX > window.innerWidth * 0.8 - particle.radius) {
+            particle.vx *= -1;
+            newX = particle.x + particle.vx;
+          }
+          
+          if (newY < particle.radius || newY > window.innerHeight * 0.7 - particle.radius) {
+            particle.vy *= -1;
+            newY = particle.y + particle.vy;
+          }
+          
+          return {
+            ...particle,
+            x: newX,
+            y: newY
+          };
+        }).filter(particle => !particle.clicked || particle.radius > 1); // Remove clicked particles that are too small
+      });
+      
+      // Add new particles occasionally if there are fewer than 10
+      if (Math.random() < 0.05 && gameParticles.length < 10) {
+        setGameParticles(prev => {
+          const radius = Math.random() * 15 + 10;
+          return [...prev, {
+            id: Date.now(),
+            x: Math.random() * (window.innerWidth * 0.8 - radius * 2) + radius,
+            y: Math.random() * (window.innerHeight * 0.7 - radius * 2) + radius,
+            vx: (Math.random() - 0.5) * 4,
+            vy: (Math.random() - 0.5) * 4,
+            radius,
+            color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+            clicked: false,
+            points: Math.floor(30 / radius) + 1,
+          }];
+        });
+      }
+      
+      gameFrameRef.current = requestAnimationFrame(updateParticles);
+    };
+    
+    gameFrameRef.current = requestAnimationFrame(updateParticles);
+  }, []);
+  
+  // Mini game - handle click on a particle
+  const handleParticleClick = (id: number) => {
+    if (!gameActive) return;
+    
+    setGameParticles(prevParticles => 
+      prevParticles.map(particle => {
+        if (particle.id === id && !particle.clicked) {
+          setGameScore(prevScore => prevScore + particle.points);
+          return { ...particle, clicked: true };
+        }
+        return particle;
+      })
+    );
+  };
+  
+  // Mini game - end game
+  const endGame = () => {
+    setGameActive(false);
+    
+    if (gameTimerRef.current) {
+      clearInterval(gameTimerRef.current);
+    }
+    
+    if (gameFrameRef.current) {
+      cancelAnimationFrame(gameFrameRef.current);
+    }
+    
+    if (gameScore > gameHighScore) {
+      setGameHighScore(gameScore);
+    }
+  };
+  
+  // Cleanup game on unmount
+  useEffect(() => {
+    return () => {
+      if (gameTimerRef.current) {
+        clearInterval(gameTimerRef.current);
+      }
+      
+      if (gameFrameRef.current) {
+        cancelAnimationFrame(gameFrameRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (typedText.length < toType.length) {
@@ -197,6 +370,107 @@ const Home = () => {
           />
         ))}
       </div>
+      
+      {/* Mini game modal */}
+      {showGameModal && (
+        <AnimatePresence>
+          <motion.div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-3xl overflow-hidden"
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              transition={{ type: "spring", damping: 15 }}
+            >
+              <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <GamepadIcon className="h-5 w-5 text-black dark:text-white" />
+                  <h3 className="text-lg font-semibold text-black dark:text-white">Mini Game: Pop the Bubbles!</h3>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-1">
+                    <span className="text-sm text-gray-600 dark:text-gray-400">Time:</span>
+                    <span className={`font-mono text-sm font-semibold ${gameTime < 10 ? 'text-red-600 dark:text-red-400' : 'text-black dark:text-white'}`}>
+                      {gameTime}s
+                    </span>
+                  </div>
+                  
+                  <div className="flex items-center gap-1">
+                    <span className="text-sm text-gray-600 dark:text-gray-400">Score:</span>
+                    <span className="font-mono text-sm font-semibold text-black dark:text-white">{gameScore}</span>
+                  </div>
+                  
+                  <button
+                    onClick={() => setShowGameModal(false)}
+                    className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  >
+                    <span className="text-2xl">×</span>
+                  </button>
+                </div>
+              </div>
+              
+              <div className="p-4">
+                <div 
+                  ref={gameCanvasRef}
+                  className="relative w-full h-[60vh] bg-gray-100 dark:bg-gray-900 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700"
+                >
+                  {gameActive ? (
+                    <>
+                      {gameParticles.map(particle => (
+                        <motion.div
+                          key={particle.id}
+                          className="absolute rounded-full cursor-pointer"
+                          style={{
+                            left: particle.x,
+                            top: particle.y,
+                            width: particle.radius * 2,
+                            height: particle.radius * 2,
+                            backgroundColor: particle.color,
+                            opacity: particle.clicked ? 0.5 : 1
+                          }}
+                          animate={particle.clicked ? { scale: 0 } : { scale: 1 }}
+                          onClick={() => handleParticleClick(particle.id)}
+                          whileHover={{ scale: 1.1 }}
+                          transition={{ duration: 0.2 }}
+                        />
+                      ))}
+                    </>
+                  ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
+                        {gameTime === 0 ? 'Game Over!' : 'Ready to Play?'}
+                      </h3>
+                      
+                      {gameTime === 0 && (
+                        <div className="text-center mb-6">
+                          <p className="text-gray-600 dark:text-gray-300 mb-2">Your Score: <span className="font-bold text-black dark:text-white">{gameScore}</span></p>
+                          <p className="text-gray-600 dark:text-gray-300">High Score: <span className="font-bold text-black dark:text-white">{gameHighScore}</span></p>
+                        </div>
+                      )}
+                      
+                      <p className="text-gray-600 dark:text-gray-300 text-center max-w-md mb-6">
+                        Click on the bubbles as fast as you can to earn points. Smaller bubbles are worth more points!
+                      </p>
+                      
+                      <Button
+                        onClick={initializeGame}
+                        className="bg-black hover:bg-gray-800 text-white dark:bg-white dark:hover:bg-gray-200 dark:text-black"
+                      >
+                        {gameTime === 0 ? 'Play Again' : 'Start Game'}
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </AnimatePresence>
+      )}
 
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="flex flex-col-reverse md:flex-row items-center gap-8 md:gap-16">
@@ -320,6 +594,46 @@ const Home = () => {
                   className="flex items-center"
                 >
                   <DownloadIcon className="mr-2 h-4 w-4" /> Download CV
+                </motion.span>
+              </Button>
+            </motion.div>
+            
+            {/* Play mini game button */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.6, duration: 0.8 }}
+              className="mt-4"
+            >
+              <Button
+                onClick={() => setShowGameModal(true)}
+                variant="ghost"
+                className="group flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+              >
+                <GamepadIcon className="h-5 w-5 group-hover:animate-pulse" />
+                <motion.span
+                  initial={{ background: "linear-gradient(to right, transparent, transparent)" }}
+                  whileHover={{
+                    background: "linear-gradient(to right, #000, #000)",
+                    backgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    color: "transparent",
+                    transition: { duration: 0.5 }
+                  }}
+                  className="relative font-medium dark:group-hover:text-white"
+                >
+                  Main Game Pop Bubbles
+                  <motion.span
+                    className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black dark:bg-white"
+                    whileHover={{ width: "100%", transition: { duration: 0.3 } }}
+                  />
+                </motion.span>
+                <motion.span
+                  initial={{ rotate: 0 }}
+                  whileHover={{ rotate: 360, transition: { duration: 0.5 } }}
+                  className="ml-1 text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-1.5 py-0.5 rounded-md"
+                >
+                  New
                 </motion.span>
               </Button>
             </motion.div>
