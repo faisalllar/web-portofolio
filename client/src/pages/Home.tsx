@@ -351,8 +351,40 @@ const Home = () => {
       {/* Matrix-style background effect */}
       <DigitalRain />
 
-      {/* Floating particles */}
+      {/* Parallax background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          className="absolute top-20 left-10 w-40 h-40 rounded-full bg-gray-200 dark:bg-gray-800 opacity-30 blur-3xl"
+          animate={{ 
+            y: [0, -15, 0],
+            x: [0, 10, 0],
+            scale: [1, 1.05, 1]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          style={{ transformOrigin: "center center" }}
+        />
+        <motion.div 
+          className="absolute bottom-40 right-20 w-60 h-60 rounded-full bg-gray-200 dark:bg-gray-800 opacity-30 blur-3xl"
+          animate={{ 
+            y: [0, 20, 0],
+            x: [0, -15, 0],
+            scale: [1, 1.08, 1]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          style={{ transformOrigin: "center center" }}
+        />
+        <motion.div 
+          className="absolute top-1/2 left-1/3 w-32 h-32 rounded-full bg-gray-200 dark:bg-gray-800 opacity-20 blur-3xl"
+          animate={{ 
+            y: [0, 25, 0],
+            x: [0, 25, 0],
+            scale: [1, 1.1, 1]
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          style={{ transformOrigin: "center center" }}
+        />
+        
+        {/* Floating particles with parallax effect */}
         {particles.map((particle) => (
           <motion.div
             key={particle.id}
@@ -362,11 +394,19 @@ const Home = () => {
               top: `${particle.y}%`,
               width: `${particle.size}px`,
               height: `${particle.size}px`,
+              zIndex: Math.floor(particle.size)
             }}
             initial={{ y: 0 }}
-            animate="start"
-            variants={waveVariants}
-            transition={{ delay: particle.delay }}
+            animate={{
+              y: [0, particle.size * -1.5, 0],
+              x: [0, particle.size * (particle.id % 2 === 0 ? 1 : -1), 0],
+            }}
+            transition={{ 
+              duration: 5 + particle.size / 2, 
+              repeat: Infinity, 
+              ease: "easeInOut",
+              delay: particle.delay
+            }}
           />
         ))}
       </div>

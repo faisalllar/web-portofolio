@@ -94,23 +94,118 @@ const About = () => {
             <h2 className="text-2xl font-bold mb-6 flex items-center">
               <CodeIcon className="mr-2 text-primary" /> Kemampuan
             </h2>
-            <div className="space-y-5">
+            <div className="space-y-7">
               {skills.map((skill, index) => (
-                <div key={index}>
-                  <div className="flex justify-between mb-1">
-                    <span className="font-medium">{skill.name}</span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">{skill.level}%</span>
+                <div key={index} className="relative">
+                  <div className="flex justify-between mb-3">
+                    <motion.span 
+                      className="font-semibold text-lg relative inline-block"
+                      whileHover={{ x: 3 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      {skill.name}
+                      <motion.span 
+                        className="absolute -bottom-1 left-0 h-0.5 bg-black dark:bg-white"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: "100%" }}
+                        transition={{ duration: 0.8, delay: index * 0.1 }}
+                        viewport={{ once: true }}
+                      />
+                    </motion.span>
+                    <div className="flex items-center gap-1">
+                      <motion.div 
+                        className="h-2 w-2 rounded-full bg-primary"
+                        animate={{ 
+                          scale: [1, 1.5, 1],
+                        }}
+                        transition={{ 
+                          repeat: Infinity, 
+                          duration: 2,
+                          delay: index * 0.2 
+                        }}
+                      />
+                      <motion.span 
+                        className="text-lg font-mono font-semibold"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
+                      >
+                        {skill.level}%
+                      </motion.span>
+                    </div>
                   </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                  
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-md h-8 relative overflow-hidden">
                     <motion.div
-                      className="bg-primary h-2.5 rounded-full"
+                      className="absolute inset-0 bg-gray-300 dark:bg-gray-600 opacity-20"
+                      initial={{ x: "-100%" }}
+                      animate={{ x: "100%" }}
+                      transition={{ 
+                        repeat: Infinity, 
+                        duration: 2,
+                        ease: "linear"
+                      }}
+                    />
+                    <motion.div
+                      className="h-full bg-gradient-to-r from-gray-800 to-black dark:from-gray-300 dark:to-white rounded-md relative flex items-center"
+                      style={{ 
+                        boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)"
+                      }}
                       initial={{ width: 0 }}
-                      animate={{ width: `${skill.level}%` }}
-                      transition={{ duration: 1, delay: 0.3 }}
-                    ></motion.div>
+                      whileInView={{ width: `${skill.level}%` }}
+                      transition={{ 
+                        duration: 1.5, 
+                        delay: 0.2 + index * 0.1,
+                        ease: "easeOut"
+                      }}
+                      viewport={{ once: true }}
+                    >
+                      <motion.div
+                        className="absolute top-0 right-0 bottom-0 w-1/4 bg-white dark:bg-gray-900 opacity-30"
+                        initial={{ x: "-100%" }}
+                        animate={{ x: "100%" }}
+                        transition={{ 
+                          repeat: Infinity, 
+                          duration: 1,
+                          ease: "linear",
+                          repeatDelay: 0.5
+                        }}
+                      />
+                    </motion.div>
                   </div>
                 </div>
               ))}
+              
+              <motion.div 
+                className="bg-white dark:bg-gray-800 rounded-lg p-5 shadow-md mt-8"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <h3 className="text-lg font-bold mb-3 flex items-center">
+                  <CodeIcon className="w-5 h-5 mr-2 text-primary" /> Teknologi Lainnya
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {["Tailwind CSS", "Git", "Firebase", "Next.js", "Express", "MongoDB", "Docker"].map((tech, i) => (
+                    <motion.span
+                      key={i}
+                      className="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-sm font-medium"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: i * 0.1 }}
+                      whileHover={{ 
+                        scale: 1.05, 
+                        backgroundColor: "#000",
+                        color: "#fff"
+                      }}
+                      viewport={{ once: true }}
+                    >
+                      {tech}
+                    </motion.span>
+                  ))}
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
