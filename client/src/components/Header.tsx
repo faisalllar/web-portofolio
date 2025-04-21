@@ -15,11 +15,11 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white dark:bg-gray-800 shadow-sm">
+    <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center space-x-2">
           <Link href="/">
-            <a className="text-primary dark:text-indigo-400 text-2xl font-bold flex items-center">
+            <a className="text-black dark:text-white text-2xl font-bold flex items-center">
               <CodeIcon className="mr-2" />
               <span className="font-['Poppins']">Muhammad Faisal</span>
             </a>
@@ -32,8 +32,8 @@ const Header = () => {
               <a
                 className={`font-medium transition-colors duration-200 ${
                   location === link.href
-                    ? "text-primary dark:text-indigo-400"
-                    : "text-gray-700 hover:text-primary dark:text-gray-300 dark:hover:text-indigo-400"
+                    ? "text-black dark:text-white"
+                    : "text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
                 }`}
               >
                 {link.label}
@@ -46,7 +46,7 @@ const Header = () => {
           <ThemeToggle />
 
           <button
-            className="md:hidden focus:outline-none"
+            className="md:hidden focus:outline-none text-black dark:text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -58,13 +58,13 @@ const Header = () => {
       {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="md:hidden">
-          <div className="px-4 py-3 space-y-2 bg-white dark:bg-gray-800 shadow-md">
+          <div className="px-4 py-3 space-y-2 bg-white dark:bg-gray-900 shadow-md">
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href}>
                 <a
                   className={`block py-2 font-medium ${
                     location === link.href
-                      ? "text-primary dark:text-indigo-400"
+                      ? "text-black dark:text-white"
                       : "text-gray-700 dark:text-gray-300"
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
