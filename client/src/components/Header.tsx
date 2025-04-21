@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "wouter";
 import ThemeToggle from "./ThemeToggle";
+import LanguageToggle from "./LanguageToggle";
 import { CodeIcon, Menu } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
+  const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [location] = useLocation();
   const [scrolled, setScrolled] = useState(false);
@@ -25,10 +28,10 @@ const Header = () => {
   }, [scrolled]);
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About Me" },
-    { href: "/projects", label: "Projects" },
-    { href: "/contact", label: "Contact" },
+    { href: "/", label: t("home") },
+    { href: "/about", label: t("about") },
+    { href: "/projects", label: t("projects") },
+    { href: "/contact", label: t("contact") },
   ];
 
   return (
@@ -50,7 +53,11 @@ const Header = () => {
           transition={{ duration: 0.5 }}
         >
           <Link href="/">
-            <div className="cursor-pointer text-black dark:text-white font-bold flex items-center">
+            <a 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-pointer text-black dark:text-white font-bold flex items-center"
+            >
               <motion.div
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.5 }}
@@ -60,7 +67,7 @@ const Header = () => {
               <span className={`font-['Poppins'] ${scrolled ? "text-lg" : "text-xl"} transition-all duration-300`}>
                 Muhammad Faisal
               </span>
-            </div>
+            </a>
           </Link>
         </motion.div>
 
@@ -73,7 +80,9 @@ const Header = () => {
                 transition={{ duration: 0.3, delay: i * 0.1 }}
               >
                 <Link href={link.href}>
-                  <div
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={`px-3 py-2 rounded-md cursor-pointer text-sm font-medium transition-all duration-200 ${
                       location === link.href
                         ? "text-black dark:text-white bg-gray-100 dark:bg-gray-800"
@@ -81,7 +90,7 @@ const Header = () => {
                     }`}
                   >
                     {link.label}
-                  </div>
+                  </a>
                 </Link>
               </motion.li>
             ))}
@@ -90,7 +99,7 @@ const Header = () => {
 
         <div className="flex items-center space-x-4">
           <ThemeToggle />
-
+          <LanguageToggle/>
           <motion.button
             className="md:hidden focus:outline-none text-black dark:text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -121,7 +130,9 @@ const Header = () => {
                   transition={{ duration: 0.2, delay: i * 0.05 }}
                 >
                   <Link href={link.href}>
-                    <div
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={`block py-2 px-2 rounded-md my-1 text-sm font-medium ${
                         location === link.href
                           ? "text-black dark:text-white bg-gray-100 dark:bg-gray-800"
@@ -130,7 +141,7 @@ const Header = () => {
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {link.label}
-                    </div>
+                    </a>
                   </Link>
                 </motion.div>
               ))}

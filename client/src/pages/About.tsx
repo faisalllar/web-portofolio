@@ -35,13 +35,13 @@ const About = () => {
   const education = [
     {
       degree: "Teknik Informatika",
-      institution: "Universitas Islam Negeri Makassar",
-      year: "2022 - sekarang",
-      description: "Menempuh pendidikan S1 di bidang Teknologi Informasi dengan fokus pada Pengembangan Web dan Aplikasi Mobile.",
+      institution: "Institut Teknologi Nasional Bandung",
+      year: "2023 - sekarang",
+      description: "Menempuh pendidikan S1 di bidang Informatika dengan fokus pada Pengembangan Web dan Aplikasi Mobile.",
     },
     {
       degree: "SMA IPA",
-      institution: "SMA Negeri 1 Makassar",
+      institution: "SMA Negeri 3 Kota Sukabumi",
       year: "2019 - 2022",
       description: "Lulus dengan nilai tertinggi di kelas. Aktif dalam klub komputer dan matematika."
     }
@@ -282,7 +282,7 @@ const About = () => {
                     2023
                   </span>
                 </div>
-                <h4 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Universitas Islam Negeri Makassar</h4>
+                <h4 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Institut Teknologi Nasional Bandung</h4>
                 <p className="text-gray-600 dark:text-gray-400">
                   Membantu dosen dalam mengajar praktikum pemrograman dasar. Membantu mahasiswa dalam menyelesaikan tugas
                   dan memahami konsep dasar pemrograman.

@@ -551,7 +551,7 @@ const Home = () => {
               transition={{ delay: 1.2, duration: 0.5 }}
             >
               <motion.a
-                href="https://github.com/"
+                href="https://github.com/faisalllar"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors duration-300"
@@ -566,7 +566,7 @@ const Home = () => {
                 <GithubIcon className="h-5 w-5" />
               </motion.a>
               <motion.a
-                href="https://linkedin.com/"
+                href="https://www.linkedin.com/in/muhammad-faisal-abdurrahman-a78161217/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors duration-300"
@@ -689,7 +689,7 @@ const Home = () => {
                   transition={{ duration: 0.5 }}
                 >
                   <img
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                    src="public/images/WhatsApp Image 2025-04-21 at 18.13.48_0b881ce4.jpg"
                     alt="Muhammad Faisal"
                     className="w-full h-auto object-cover transition-all duration-700"
                   />
@@ -796,15 +796,15 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-4">
             {[
               {
-                name: "Budi Santoso",
-                title: "Project Manager at XYZ Company",
-                image: "https://randomuser.me/api/portraits/men/32.jpg",
-                text: "Muhammad Faisal sangat profesional dan terampil. Project website kami selesai tepat waktu dan hasil akhirnya melampaui ekspektasi kami."
+                name: "Hanni Newjeans",
+                title: "Member of Newjeans",
+                image: "/public/images/hanni-newjeans-get-up-4k-wallpaper-uhdpaper.com-955@1@k.jpg",
+                text: "Faisal sangat profesional dan terampil. Project website kami selesai tepat waktu dan hasil akhirnya melampaui ekspektasi kami."
               },
               {
-                name: "Siti Rahma",
-                title: "Founder of StartUp Indonesia",
-                image: "https://randomuser.me/api/portraits/women/44.jpg",
+                name: "Haerin Newjeans",
+                title: "Member of Newjeans",
+                image: "/public/images/haerin-newjeans-how-sweet-4k-wallpaper-uhdpaper.com-563@0@j.jpg",
                 text: "Saya sangat puas dengan hasil pekerjaan Faisal. Desain UI/UX yang dihasilkan intuitif, modern, dan sangat sesuai dengan branding kami."
               }
             ].map((testimonial, index) => (

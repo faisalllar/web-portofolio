@@ -27,9 +27,9 @@ const Projects = () => {
 
   const projects = [
     {
-      title: "E-Commerce Website",
-      description: "Sebuah website toko online lengkap dengan fitur keranjang belanja, pembayaran, dan manajemen produk. Dibuat dengan React, Node.js, dan MongoDB.",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+      title: "EcoConnect",
+      description: "Aplikasi pengelolaan sampah yang berfungsi untuk memfasilitasi pengelolaan dan daur ulang sampah secara efisien.",
+      image: "/public/images/WhatsApp Image 2025-04-21 at 17.51.25_9b3f0895.jpg",
       tags: ["React", "Node.js", "MongoDB", "Express", "Redux"],
       liveUrl: "#",
       githubUrl: "#",

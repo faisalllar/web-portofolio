@@ -20,7 +20,7 @@ const Footer = () => {
 
           <div className="flex space-x-4">
             <a
-              href="https://github.com/"
+              href="https://github.com/faisalllar"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
@@ -29,7 +29,7 @@ const Footer = () => {
               <GithubIcon className="h-5 w-5" />
             </a>
             <a
-              href="https://linkedin.com/"
+              href="https://www.linkedin.com/in/muhammad-faisal-abdurrahman-a78161217/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
@@ -38,7 +38,7 @@ const Footer = () => {
               <LinkedinIcon className="h-5 w-5" />
             </a>
             <a
-              href="https://instagram.com/"
+              href="https://instagram.com/faisalll.ar"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
@@ -51,7 +51,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-200 dark:border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-600 dark:text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} Muhammad Faisal Abdurrahman. UTS Pemrograman Web.
+            &copy; {new Date().getFullYear()} Muhammad Faisal Abdurrahman. NIM 152023100.
           </p>
 
           <div className="flex space-x-6 mt-4 md:mt-0">

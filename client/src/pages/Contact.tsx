@@ -70,37 +70,37 @@ const Contact = () => {
     {
       icon: <PhoneIcon className="h-5 w-5" />,
       title: "Phone",
-      detail: "+62 812 3456 7890",
-      link: "tel:+6281234567890"
+      detail: "+62 819 2715 4421",
+      link: "tel:+6281927154421"
     },
     {
       icon: <MailIcon className="h-5 w-5" />,
       title: "Email",
-      detail: "faisal@example.com",
-      link: "mailto:faisal@example.com"
+      detail: "faisaljr606@gmail.com",
+      link: "mailto:faisaljr606@gmail.com"
     },
     {
       icon: <MapPinIcon className="h-5 w-5" />,
       title: "Location",
-      detail: "Makassar, Indonesia",
-      link: "https://goo.gl/maps/YwNJWE19EMp6Jgik7"
+      detail: "Bandung, Indonesia",
+      link: "https://maps.app.goo.gl/fB3crxB7R9Dx8bYA8"
     }
   ];
 
   const socialLinks = [
     {
       icon: <GithubIcon className="h-5 w-5" />,
-      link: "https://github.com/",
+      link: "https://github.com/faisalllar",
       label: "GitHub"
     },
     {
       icon: <LinkedinIcon className="h-5 w-5" />,
-      link: "https://linkedin.com/",
+      link: "https://www.linkedin.com/in/muhammad-faisal-abdurrahman-a78161217/",
       label: "LinkedIn"
     },
     {
       icon: <InstagramIcon className="h-5 w-5" />,
-      link: "https://instagram.com/",
+      link: "https://instagram.com/faisalll.ar",
       label: "Instagram"
     }
   ];
@@ -141,6 +141,8 @@ const Contact = () => {
                 <a 
                   key={index} 
                   href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center space-x-4 group"
                 >
                   <div className="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
