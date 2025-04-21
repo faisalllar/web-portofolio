@@ -32,7 +32,7 @@ const Home = () => {
   const [typingComplete, setTypingComplete] = useState(false);
   const toType = "Web Developer | UI Designer | Mobile Developer";
   const typingSpeed = 100; // ms per character
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   
   // Mini game states
   const [showGameModal, setShowGameModal] = useState(false);
@@ -240,7 +240,7 @@ const Home = () => {
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.6]);
 
-  function handleMouse(event) {
+  function handleMouse(event: React.MouseEvent<HTMLDivElement>) {
     const rect = event.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -611,23 +611,15 @@ const Home = () => {
                 className="group flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
               >
                 <GamepadIcon className="h-5 w-5 group-hover:animate-pulse" />
-                <motion.span
-                  initial={{ background: "linear-gradient(to right, transparent, transparent)" }}
-                  whileHover={{
-                    background: "linear-gradient(to right, #000, #000)",
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    color: "transparent",
-                    transition: { duration: 0.5 }
-                  }}
-                  className="relative font-medium dark:group-hover:text-white"
-                >
+                <span className="relative font-medium dark:group-hover:text-white group-hover:text-black transition-colors duration-300">
                   Main Game Pop Bubbles
                   <motion.span
-                    className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black dark:bg-white"
-                    whileHover={{ width: "100%", transition: { duration: 0.3 } }}
+                    className="absolute -bottom-1 left-0 h-0.5 bg-black dark:bg-white"
+                    initial={{ width: 0 }}
+                    whileHover={{ width: "100%" }}
+                    transition={{ duration: 0.3 }}
                   />
-                </motion.span>
+                </span>
                 <motion.span
                   initial={{ rotate: 0 }}
                   whileHover={{ rotate: 360, transition: { duration: 0.5 } }}
@@ -697,7 +689,7 @@ const Home = () => {
         >
           <motion.div
             className="flex flex-col items-center cursor-pointer"
-            onClick={() => scrollRef.current.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => scrollRef.current?.scrollIntoView({ behavior: 'smooth' })}
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
@@ -765,44 +757,105 @@ const Home = () => {
           ))}
         </motion.div>
 
+        {/* Testimonial section */}
         <motion.div 
-          className="mt-24 text-center"
-          variants={itemVariants}
+          className="mt-24"
+          variants={containerVariants}
         >
-          <Link href="/projects">
-            <Button 
-              size="lg" 
-              className="px-8 bg-black hover:bg-gray-800 text-white dark:bg-white dark:hover:bg-gray-200 dark:text-black overflow-hidden group relative"
-            >
-              <motion.span
-                initial={{ opacity: 1 }}
-                whileHover={{ 
-                  scale: 1.05,
-                  transition: { duration: 0.2 }
-                }}
-                className="relative z-10"
+          <motion.h2 
+            className="text-3xl font-bold text-center mb-10 text-black dark:text-white"
+            variants={itemVariants}
+          >
+            Testimonials
+          </motion.h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              {
+                name: "Budi Santoso",
+                title: "Project Manager at XYZ Company",
+                image: "https://randomuser.me/api/portraits/men/32.jpg",
+                text: "Muhammad Faisal sangat profesional dan terampil. Project website kami selesai tepat waktu dan hasil akhirnya melampaui ekspektasi kami. Komunikasinya juga lancar selama proses pengerjaan."
+              },
+              {
+                name: "Siti Rahma",
+                title: "Founder of StartUp Indonesia",
+                image: "https://randomuser.me/api/portraits/women/44.jpg",
+                text: "Saya sangat puas dengan hasil pekerjaan Faisal. Desain UI/UX yang dihasilkan intuitif, modern, dan sangat sesuai dengan branding kami. Akan bekerjasama lagi di project berikutnya."
+              }
+            ].map((testimonial, index) => (
+              <motion.div 
+                key={index}
+                className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg relative overflow-hidden"
+                variants={itemVariants}
+                whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
               >
-                Lihat Portofolio Saya
-              </motion.span>
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-gray-600 to-black dark:from-gray-400 dark:to-white -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: "0%" }}
-                transition={{ duration: 0.4 }}
-              />
-            </Button>
-          </Link>
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-bl-full -z-10 opacity-50" />
+                
+                <div className="flex items-center mb-4">
+                  <div className="mr-4 rounded-full overflow-hidden w-14 h-14 border-2 border-gray-200 dark:border-gray-700 flex-shrink-0">
+                    <img 
+                      src={testimonial.image} 
+                      alt={testimonial.name} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-black dark:text-white">{testimonial.name}</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{testimonial.title}</p>
+                  </div>
+                </div>
+                
+                <p className="text-gray-600 dark:text-gray-300 relative">
+                  <span className="absolute -top-2 -left-1 text-4xl text-gray-200 dark:text-gray-700">"</span>
+                  <span className="relative z-10">{testimonial.text}</span>
+                  <span className="absolute -bottom-5 -right-1 text-4xl text-gray-200 dark:text-gray-700">"</span>
+                </p>
+              </motion.div>
+            ))}
+          </div>
+          
+          <motion.div 
+            className="mt-16 text-center"
+            variants={itemVariants}
+          >
+            <Link href="/projects">
+              <Button 
+                size="lg" 
+                className="px-8 bg-black hover:bg-gray-800 text-white dark:bg-white dark:hover:bg-gray-200 dark:text-black overflow-hidden group relative"
+              >
+                <motion.span
+                  initial={{ opacity: 1 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    transition: { duration: 0.2 }
+                  }}
+                  className="relative z-10"
+                >
+                  Lihat Portofolio Saya
+                </motion.span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-gray-600 to-black dark:from-gray-400 dark:to-white -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "0%" }}
+                  transition={{ duration: 0.4 }}
+                />
+              </Button>
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
 
       {/* Custom CSS for the Matrix effect */}
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{ 
+        __html: `
         .matrix-rain {
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
+          opacity: 0.2;
         }
         
         .matrix-column {
@@ -839,7 +892,7 @@ const Home = () => {
         .dark .matrix-character {
           color: rgba(255, 255, 255, 0.8);
         }
-      `}</style>
+      `}} />
     </motion.section>
   );
 };
