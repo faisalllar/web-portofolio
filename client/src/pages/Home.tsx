@@ -348,61 +348,45 @@ const Home = () => {
       animate="visible"
       variants={containerVariants}
     >
-      {/* Matrix-style background effect */}
-      <DigitalRain />
-
-      {/* Parallax background elements */}
+      {/* Simplified elegant background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Simple gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-50 dark:to-gray-900 opacity-40"></div>
+        
+        {/* Smooth blur elements */}
         <motion.div 
-          className="absolute top-20 left-10 w-40 h-40 rounded-full bg-gray-200 dark:bg-gray-800 opacity-30 blur-3xl"
+          className="absolute top-40 left-20 w-80 h-80 rounded-full bg-gray-100 dark:bg-gray-800 opacity-10 blur-3xl"
           animate={{ 
-            y: [0, -15, 0],
-            x: [0, 10, 0],
+            y: [0, -20, 0],
             scale: [1, 1.05, 1]
           }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformOrigin: "center center" }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
-          className="absolute bottom-40 right-20 w-60 h-60 rounded-full bg-gray-200 dark:bg-gray-800 opacity-30 blur-3xl"
+          className="absolute bottom-40 right-20 w-96 h-96 rounded-full bg-gray-200 dark:bg-gray-800 opacity-10 blur-3xl"
           animate={{ 
             y: [0, 20, 0],
-            x: [0, -15, 0],
-            scale: [1, 1.08, 1]
+            scale: [1, 1.03, 1]
           }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          style={{ transformOrigin: "center center" }}
-        />
-        <motion.div 
-          className="absolute top-1/2 left-1/3 w-32 h-32 rounded-full bg-gray-200 dark:bg-gray-800 opacity-20 blur-3xl"
-          animate={{ 
-            y: [0, 25, 0],
-            x: [0, 25, 0],
-            scale: [1, 1.1, 1]
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          style={{ transformOrigin: "center center" }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
         />
         
-        {/* Floating particles with parallax effect */}
-        {particles.map((particle) => (
+        {/* Only keep a few subtle floating particles */}
+        {particles.slice(0, 5).map((particle) => (
           <motion.div
             key={particle.id}
-            className="absolute rounded-full bg-black dark:bg-white opacity-20"
+            className="absolute rounded-full bg-black dark:bg-white opacity-10"
             style={{
               left: `${particle.x}%`,
               top: `${particle.y}%`,
-              width: `${particle.size}px`,
-              height: `${particle.size}px`,
-              zIndex: Math.floor(particle.size)
+              width: `${particle.size * 1.5}px`,
+              height: `${particle.size * 1.5}px`,
             }}
-            initial={{ y: 0 }}
             animate={{
-              y: [0, particle.size * -1.5, 0],
-              x: [0, particle.size * (particle.id % 2 === 0 ? 1 : -1), 0],
+              y: [0, -15, 0],
             }}
             transition={{ 
-              duration: 5 + particle.size / 2, 
+              duration: 8, 
               repeat: Infinity, 
               ease: "easeInOut",
               delay: particle.delay
@@ -809,48 +793,72 @@ const Home = () => {
             Testimonials
           </motion.h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-4">
             {[
               {
                 name: "Budi Santoso",
                 title: "Project Manager at XYZ Company",
                 image: "https://randomuser.me/api/portraits/men/32.jpg",
-                text: "Muhammad Faisal sangat profesional dan terampil. Project website kami selesai tepat waktu dan hasil akhirnya melampaui ekspektasi kami. Komunikasinya juga lancar selama proses pengerjaan."
+                text: "Muhammad Faisal sangat profesional dan terampil. Project website kami selesai tepat waktu dan hasil akhirnya melampaui ekspektasi kami."
               },
               {
                 name: "Siti Rahma",
                 title: "Founder of StartUp Indonesia",
                 image: "https://randomuser.me/api/portraits/women/44.jpg",
-                text: "Saya sangat puas dengan hasil pekerjaan Faisal. Desain UI/UX yang dihasilkan intuitif, modern, dan sangat sesuai dengan branding kami. Akan bekerjasama lagi di project berikutnya."
+                text: "Saya sangat puas dengan hasil pekerjaan Faisal. Desain UI/UX yang dihasilkan intuitif, modern, dan sangat sesuai dengan branding kami."
               }
             ].map((testimonial, index) => (
               <motion.div 
                 key={index}
-                className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg relative overflow-hidden"
+                className="bg-transparent border border-gray-100 dark:border-gray-800 rounded-xl p-6 relative backdrop-blur-sm"
                 variants={itemVariants}
-                whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
+                whileHover={{ 
+                  y: -3, 
+                  borderColor: "rgba(0,0,0,0.2)",
+                  backgroundColor: "rgba(255,255,255,0.05)",
+                  transition: { duration: 0.2 }
+                }}
               >
-                <div className="absolute top-0 right-0 w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-bl-full -z-10 opacity-50" />
-                
-                <div className="flex items-center mb-4">
-                  <div className="mr-4 rounded-full overflow-hidden w-14 h-14 border-2 border-gray-200 dark:border-gray-700 flex-shrink-0">
-                    <img 
-                      src={testimonial.image} 
-                      alt={testimonial.name} 
-                      className="w-full h-full object-cover"
-                    />
+                <div className="flex items-center mb-5">
+                  <div className="relative mr-4">
+                    <div className="w-12 h-12 rounded-full overflow-hidden">
+                      <img 
+                        src={testimonial.image} 
+                        alt={testimonial.name} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <motion.div 
+                      className="absolute -bottom-1 -right-1 w-5 h-5 bg-black dark:bg-white rounded-full flex items-center justify-center"
+                      animate={{ 
+                        scale: [1, 1.1, 1],
+                      }}
+                      transition={{ 
+                        repeat: Infinity, 
+                        duration: 2
+                      }}
+                    >
+                      <span className="text-white dark:text-black text-[10px] font-bold">✓</span>
+                    </motion.div>
                   </div>
                   <div>
-                    <h3 className="font-bold text-black dark:text-white">{testimonial.name}</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{testimonial.title}</p>
+                    <h3 className="font-medium text-black dark:text-white text-base">{testimonial.name}</h3>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">{testimonial.title}</p>
                   </div>
                 </div>
                 
-                <p className="text-gray-600 dark:text-gray-300 relative">
-                  <span className="absolute -top-2 -left-1 text-4xl text-gray-200 dark:text-gray-700">"</span>
-                  <span className="relative z-10">{testimonial.text}</span>
-                  <span className="absolute -bottom-5 -right-1 text-4xl text-gray-200 dark:text-gray-700">"</span>
+                <p className="text-gray-600 dark:text-gray-300 text-sm italic leading-relaxed">
+                  "{testimonial.text}"
                 </p>
+                
+                <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <span key={star} className="text-yellow-500">★</span>
+                    ))}
+                    <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">5.0</span>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
