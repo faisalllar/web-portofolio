@@ -1,7 +1,15 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { BrushIcon, ShareIcon, TrophyIcon } from "lucide-react";
+import { 
+  CodeIcon, 
+  GithubIcon, 
+  LinkedinIcon, 
+  DownloadIcon, 
+  BrainIcon, 
+  GlobeIcon, 
+  SmartphoneIcon
+} from "lucide-react";
 
 const Home = () => {
   const containerVariants = {
@@ -25,32 +33,34 @@ const Home = () => {
     },
   };
 
-  const features = [
+  const services = [
     {
-      icon: <BrushIcon className="h-6 w-6" />,
-      title: "Create Levels",
+      icon: <GlobeIcon className="h-6 w-6" />,
+      title: "Web Development",
       description:
-        "Design custom game levels with our easy-to-use editor. Drag and drop elements to create unique challenges.",
+        "Membuat website modern dan responsif dengan berbagai teknologi terbaru seperti React, Next.js, dan Tailwind CSS.",
       bgClass: "bg-indigo-100 dark:bg-indigo-900",
       textClass: "text-primary dark:text-indigo-300",
     },
     {
-      icon: <ShareIcon className="h-6 w-6" />,
-      title: "Share Games",
+      icon: <SmartphoneIcon className="h-6 w-6" />,
+      title: "Mobile Development",
       description:
-        "Share your creations with coworkers instantly. Generate a link or add them directly to your team's collection.",
+        "Mengembangkan aplikasi mobile untuk Android dan iOS menggunakan React Native dan Flutter.",
       bgClass: "bg-pink-100 dark:bg-pink-900",
       textClass: "text-secondary dark:text-pink-300",
     },
     {
-      icon: <TrophyIcon className="h-6 w-6" />,
-      title: "Compete",
+      icon: <BrainIcon className="h-6 w-6" />,
+      title: "UI/UX Design",
       description:
-        "Play others' levels and compete for high scores. Perfect for quick lunch break entertainment with colleagues.",
+        "Merancang antarmuka yang intuitif dan menarik dengan fokus pada pengalaman pengguna yang baik.",
       bgClass: "bg-green-100 dark:bg-green-900",
       textClass: "text-success dark:text-green-300",
     },
   ];
+
+  const typewriterText = "Web Developer";
 
   return (
     <motion.section
@@ -66,34 +76,63 @@ const Home = () => {
             className="w-full md:w-1/2 space-y-6"
             variants={itemVariants}
           >
+            <div className="mb-3 text-primary dark:text-indigo-400 font-medium">Halo, Saya adalah</div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white font-['Poppins']">
-              Create & Share{" "}
-              <span className="text-primary dark:text-indigo-400">
-                Game Levels
-              </span>{" "}
-              During Lunch Breaks
+              Muhammad Faisal A.{" "}
+              <span className="text-primary dark:text-indigo-400 block mt-2">
+                <motion.span
+                  animate={{ opacity: [0, 1, 1, 0] }}
+                  transition={{ 
+                    duration: 2.5, 
+                    repeat: Infinity, 
+                    times: [0, 0.1, 0.9, 1] 
+                  }}
+                  className="inline-block w-[2px] h-8 bg-primary dark:bg-indigo-400 ml-1 align-middle"
+                >
+                  &nbsp;
+                </motion.span>
+              </span>
             </h1>
 
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              Design your own challenges, share with coworkers, and compete for
-              the high score - all in your web browser, no installation needed.
+              Seorang mahasiswa Informatika dan pengembang web yang bersemangat tentang
+              menciptakan pengalaman digital yang menarik dan intuitif untuk pengguna.
             </p>
 
+            <div className="flex space-x-4 pt-3">
+              <a
+                href="https://github.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors duration-300"
+                aria-label="GitHub"
+              >
+                <GithubIcon className="h-5 w-5" />
+              </a>
+              <a
+                href="https://linkedin.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors duration-300"
+                aria-label="LinkedIn"
+              >
+                <LinkedinIcon className="h-5 w-5" />
+              </a>
+            </div>
+
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Link href="/editor">
+              <Link href="/contact">
                 <Button className="w-full sm:w-auto text-center" size="lg">
-                  Start Creating
+                  Hubungi Saya
                 </Button>
               </Link>
-              <Link href="/discover">
-                <Button
-                  variant="outline"
-                  className="w-full sm:w-auto text-center"
-                  size="lg"
-                >
-                  Explore Games
-                </Button>
-              </Link>
+              <Button
+                variant="outline"
+                className="w-full sm:w-auto text-center"
+                size="lg"
+              >
+                <DownloadIcon className="mr-2 h-4 w-4" /> Download CV
+              </Button>
             </div>
           </motion.div>
 
@@ -102,12 +141,15 @@ const Home = () => {
             variants={itemVariants}
             whileHover={{ rotate: 0, transition: { duration: 0.5 } }}
           >
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform rotate-2 transition-transform hover:rotate-0 duration-300">
-              <img
-                src="https://images.unsplash.com/photo-1569098644584-210bcd375b59?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                alt="Coworkers playing a game together"
-                className="w-full h-auto object-cover"
-              />
+            <div className="relative">
+              <div className="absolute inset-0 bg-primary dark:bg-indigo-600 rounded-full blur-3xl opacity-10 -z-10 transform -rotate-12"></div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform rotate-2 transition-transform hover:rotate-0 duration-300">
+                <img
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                  alt="Muhammad Faisal"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
             </div>
           </motion.div>
         </div>
@@ -116,24 +158,35 @@ const Home = () => {
           className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8"
           variants={containerVariants}
         >
-          {features.map((feature, index) => (
+          {services.map((service, index) => (
             <motion.div
               key={index}
-              className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-transform hover:translate-y-[-8px]"
+              className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition-transform duration-300"
               variants={itemVariants}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
             >
               <div
-                className={`w-12 h-12 ${feature.bgClass} ${feature.textClass} rounded-full flex items-center justify-center mb-4`}
+                className={`w-12 h-12 ${service.bgClass} ${service.textClass} rounded-full flex items-center justify-center mb-4`}
               >
-                {feature.icon}
+                {service.icon}
               </div>
-              <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+              <h3 className="text-xl font-bold mb-3">{service.title}</h3>
               <p className="text-gray-600 dark:text-gray-300">
-                {feature.description}
+                {service.description}
               </p>
             </motion.div>
           ))}
+        </motion.div>
+
+        <motion.div 
+          className="mt-24 text-center"
+          variants={itemVariants}
+        >
+          <Link href="/projects">
+            <Button size="lg" className="px-8">
+              Lihat Portofolio Saya
+            </Button>
+          </Link>
         </motion.div>
       </div>
     </motion.section>

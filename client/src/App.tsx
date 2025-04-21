@@ -3,21 +3,22 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
-import Editor from "@/pages/Editor";
-import Discover from "@/pages/Discover";
-import Profile from "@/pages/Profile";
+import About from "@/pages/About";
+import Projects from "@/pages/Projects";
+import Contact from "@/pages/Contact";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
-import { GameProvider } from "./contexts/GameContext";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./lib/queryClient";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/editor" component={Editor} />
-      <Route path="/discover" component={Discover} />
-      <Route path="/profile" component={Profile} />
+      <Route path="/about" component={About} />
+      <Route path="/projects" component={Projects} />
+      <Route path="/contact" component={Contact} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -26,8 +27,8 @@ function Router() {
 function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="light">
-      <TooltipProvider>
-        <GameProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="flex-1">
@@ -36,8 +37,8 @@ function App() {
             <Footer />
           </div>
           <Toaster />
-        </GameProvider>
-      </TooltipProvider>
+        </TooltipProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }

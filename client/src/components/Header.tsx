@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useLocation, Link } from "wouter";
 import ThemeToggle from "./ThemeToggle";
-import UserMenu from "./UserMenu";
-import { GamepadIcon, Menu } from "lucide-react";
+import { CodeIcon, Menu } from "lucide-react";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -10,9 +9,9 @@ const Header = () => {
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/editor", label: "Editor" },
-    { href: "/discover", label: "Discover" },
-    { href: "/profile", label: "Profile" },
+    { href: "/about", label: "About Me" },
+    { href: "/projects", label: "Projects" },
+    { href: "/contact", label: "Contact" },
   ];
 
   return (
@@ -21,8 +20,8 @@ const Header = () => {
         <div className="flex items-center space-x-2">
           <Link href="/">
             <a className="text-primary dark:text-indigo-400 text-2xl font-bold flex items-center">
-              <GamepadIcon className="mr-2" />
-              <span className="font-['Poppins']">GameCraft</span>
+              <CodeIcon className="mr-2" />
+              <span className="font-['Poppins']">Muhammad Faisal</span>
             </a>
           </Link>
         </div>
@@ -45,7 +44,6 @@ const Header = () => {
 
         <div className="flex items-center space-x-4">
           <ThemeToggle />
-          <UserMenu />
 
           <button
             className="md:hidden focus:outline-none"
