@@ -5,12 +5,13 @@ import { terrainElements, itemElements, characterElements } from '@/lib/gameElem
 import { Button } from '@/components/ui/button';
 import { HelpCircle, PlayIcon, Trash2Icon } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { PlusIcon } from '@heroicons/react/24/outline'
 
 const ElementPalette = () => {
   const { selectElement, clearGrid, testLevel } = useGame();
 
-  const handleElementDragStart = (e: React.DragEvent, elementId: string) => {
-    e.dataTransfer.setData('text/plain', elementId);
+  // Handler drag: langsung selectElement
+  const handleElementDragStart = (elementId: string) => {
     selectElement(elementId);
   };
 
@@ -91,8 +92,7 @@ const ElementPalette = () => {
                 <motion.div
                   key={element.id}
                   className={`${section.bgColor} p-3 rounded-md text-center cursor-grab flex flex-col items-center`}
-                  draggable
-                  onDragStart={(e) => handleElementDragStart(e, element.id)}
+                  onPointerDown={() => handleElementDragStart(element.id)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   data-element={element.elementType}

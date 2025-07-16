@@ -79,7 +79,12 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.userCounter++;
-    const user: User = { ...insertUser, id };
+    const user: User = {
+      ...insertUser,
+      id,
+      displayName: insertUser.displayName ?? null,
+      avatarUrl: insertUser.avatarUrl ?? null,
+    };
     this.users.set(id, user);
     return user;
   }
@@ -102,13 +107,18 @@ export class MemStorage implements IStorage {
   async createGame(insertGame: InsertGame): Promise<Game> {
     const id = this.gameCounter++;
     const now = new Date();
-    const game: Game = { 
-      ...insertGame, 
-      id, 
-      playCount: 0, 
-      rating: 0, 
+    const game: Game = {
+      ...insertGame,
+      id,
+      playCount: 0,
+      rating: 0,
       ratingCount: 0,
-      createdAt: now
+      createdAt: now,
+      description: insertGame.description ?? null,
+      difficulty: insertGame.difficulty ?? null,
+      authorId: insertGame.authorId ?? null,
+      thumbnailUrl: insertGame.thumbnailUrl ?? null,
+      isPublished: insertGame.isPublished ?? null,
     };
     this.games.set(id, game);
     return game;
@@ -130,8 +140,7 @@ export class MemStorage implements IStorage {
   async incrementPlayCount(id: number): Promise<Game | undefined> {
     const game = this.games.get(id);
     if (!game) return undefined;
-    
-    const updatedGame = { ...game, playCount: game.playCount + 1 };
+    const updatedGame = { ...game, playCount: (game.playCount ?? 0) + 1 };
     this.games.set(id, updatedGame);
     return updatedGame;
   }
@@ -147,7 +156,12 @@ export class MemStorage implements IStorage {
   
   async createGameElement(element: InsertGameElement): Promise<GameElement> {
     const id = this.elementCounter++;
-    const gameElement: GameElement = { ...element, id };
+    const gameElement: GameElement = {
+      ...element,
+      id,
+      icon: element.icon ?? null,
+      properties: element.properties ?? null,
+    };
     this.gameElements.set(id, gameElement);
     return gameElement;
   }
@@ -162,12 +176,15 @@ export class MemStorage implements IStorage {
   async createRating(insertRating: InsertGameRating): Promise<GameRating> {
     const id = this.ratingCounter++;
     const now = new Date();
-    const rating: GameRating = { ...insertRating, id, createdAt: now };
+    const rating: GameRating = {
+      ...insertRating,
+      id,
+      createdAt: now,
+      comment: insertRating.comment ?? null,
+    };
     this.gameRatings.set(id, rating);
-    
     // Update the game's rating
     await this.updateGameRating(insertRating.gameId);
-    
     return rating;
   }
   

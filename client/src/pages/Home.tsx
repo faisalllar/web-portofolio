@@ -798,13 +798,13 @@ const Home = () => {
               {
                 name: "Hanni Newjeans",
                 title: "Member of Newjeans",
-                image: "/public/images/hanni-newjeans-get-up-4k-wallpaper-uhdpaper.com-955@1@k.jpg",
+                image: "/public/images/hanni2.jpg",
                 text: "Faisal sangat profesional dan terampil. Project website kami selesai tepat waktu dan hasil akhirnya melampaui ekspektasi kami."
               },
               {
                 name: "Haerin Newjeans",
                 title: "Member of Newjeans",
-                image: "/public/images/haerin-newjeans-how-sweet-4k-wallpaper-uhdpaper.com-563@0@j.jpg",
+                image: "/public/images/haerin1.jpg",
                 text: "Saya sangat puas dengan hasil pekerjaan Faisal. Desain UI/UX yang dihasilkan intuitif, modern, dan sangat sesuai dengan branding kami."
               }
             ].map((testimonial, index) => (

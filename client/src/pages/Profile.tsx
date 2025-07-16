@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Pencil, Trophy, GamepadIcon, Heart, Activity } from 'lucide-react';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState('my-games');
